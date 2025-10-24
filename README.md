@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/pages/api-reference/create-next-app).
 
 ## Getting Started
@@ -38,3 +39,9 @@ You can check out [the Next.js GitHub repository](https://github.com/vercel/next
 The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/pages/building-your-application/deploying) for more details.
+=======
+# Brainrotify.AI Version 1.1.2
+Use this AI tool to create a new brainrot animal for your name. It will also give you an image of your new brainrot and the sound of the AI man saying your new brainrot's name.
+
+I hope you enjoyed this tool! I created it inspired by all the brainrot animals and the idea of everyone having their own. This tool may soon be an app, and it will also be available on Scratch someday. Expect updates every 2-5 months.
+>>>>>>> 2006791199ea97bbebb3ac9925f3f26e207b7642
