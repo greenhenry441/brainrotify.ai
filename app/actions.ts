@@ -1,55 +1,75 @@
-'use server'
+'use server';
 
-import { z } from 'zod'
+import { z } from 'zod';
 
+// 1. Define the schema for input validation
 const schema = z.object({
-  name: z.string().min(2, { message: 'Name must be at least 2 characters long' }),
-})
+  name: z.string().min(2, { message: 'Please enter a name with at least 2 characters.' }).trim(),
+});
 
-const adjectives = ['Stanky', 'Goated', 'Based', 'Rizzler', 'Glow-up', 'Skibidi', 'Sigma', 'Cringe', 'Bussin'', 'Fanum Tax'];
-const animals = ['Capybara', 'Gyatt', 'Kai Cenat', 'Doge', 'Quokka', 'Possum', 'Raccoon', 'Cat', 'Red Panda', 'Hampter'];
+// 2. Define the list of brainrot adjectives and animals
+const adjectives = [
+    'Gooner',
+    'Skibidi',
+    'Rizzler',
+    'Gyatt-a-lot',
+    'Sigma',
+    'Fanum Taxed',
+    'Kai Cenat',
+    'Mewing',
+    'Ohioan',
+    'Grimace Shake',
+];
 
-export async function generateBrainrotAnimal(prevState: any, formData: FormData) {
-    const validatedFields = schema.safeParse({
-        name: formData.get('name'),
-    })
+const animals = [
+    'Capybara',
+    'Quokka',
+    'Wombat',
+    'Axolotl',
+    'Red Panda',
+    'Fennec Fox',
+    'Blobfish',
+    'Gerenuk',
+    'Shoebill Stork',
+    'Dumbo Octopus',
+];
 
-    if (!validatedFields.success) {
-        return {
-            animalName: '',
-            imageUrl: '',
-            audioUrl: '',
-            message: 'error',
-            errors: validatedFields.error.flatten().fieldErrors,
-        }
-    }
+// 3. Define the initial state for the form
+export interface FormState {
+  message: string;
+  errors?: {
+    name?: string[];
+  };
+}
 
-    const name = validatedFields.data.name;
+// 4. Create the Server Action function
+export async function createBrainrotAnimal(prevState: FormState, formData: FormData): Promise<FormState> {
+  
+  // Get the name from the form
+  const validatedFields = schema.safeParse({
+    name: formData.get('name'),
+  });
 
-    try {
-        // Simulate AI-powered generation
-        const randomAdjective = adjectives[Math.floor(Math.random() * adjectives.length)];
-        const randomAnimal = animals[Math.floor(Math.random() * animals.length)];
-        const animalName = `${randomAdjective} ${name} ${randomAnimal}`;
-        const imageUrl = `https://via.placeholder.com/400x400.png?text=${encodeURIComponent(animalName)}`;
-        
-        // In a real app, you would generate audio here.
-        const audioUrl = ''
+  // If validation fails, return the errors
+  if (!validatedFields.success) {
+    return {
+        message: '',
+        errors: validatedFields.error.flatten().fieldErrors,
+    };
+  }
 
-        return {
-            animalName,
-            imageUrl,
-            audioUrl,
-            message: 'success',
-            errors: null,
-        }
-    } catch (error) {
-        return {
-            animalName: '',
-            imageUrl: '',
-            audioUrl: '',
-            message: 'error',
-            errors: { _errors: ['Something went wrong. Please try again.'] },
-        }
-    }
+  // If validation succeeds, generate the brainrot animal name
+  const name = validatedFields.data.name;
+
+  // Simple algorithm to generate a "unique" animal based on name length
+  const adjectiveIndex = name.length % adjectives.length;
+  const animalIndex = name.charCodeAt(0) % animals.length;
+
+  const randomAdjective = adjectives[adjectiveIndex];
+  const randomAnimal = animals[animalIndex];
+
+  const brainrotAnimal = `${randomAdjective} ${randomAnimal}`;
+
+  // Return the new state with the success message
+  return { message: brainrotAnimal };
 }

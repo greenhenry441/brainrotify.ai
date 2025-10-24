@@ -1,27 +1,51 @@
-# Brainrot Animal Generator
+# Brainrot Animal Generator - Blueprint
 
-## Overview
+## 1. Overview
 
-A web application that generates a "brainrot animal" based on a user's name. The application will feature a modern, visually appealing interface and will be built using Next.js and Tailwind CSS.
+The Brainrot Animal Generator is a simple, modern web application designed to generate a unique and humorous "brainrot" animal name based on user input. It's built with Next.js using the App Router and leverages React Server Components and Server Actions for a fast, interactive experience. The design is dark-themed, responsive, and includes subtle animations and modern styling.
 
-##- Style, Design, and Features
+## 2. Design and Style Guide
 
-### Initial Version
+- **Theme:** Dark mode, with a base background of `gray-900` (`#111827`).
+- **Accent Colors:** A gradient of `purple`, `indigo`, and `pink` is used for the main headline to create a vibrant, eye-catching effect.
+- **Typography:** The primary font is `Inter`, as configured in `layout.tsx`.
+    - **Headline:** Large, bold (`text-4xl` to `text-5xl`), and uses a gradient text effect.
+    - **Body Text:** A clean, readable size (`text-lg`) with a light gray color (`gray-300`).
+- **UI Components:**
+    - **Main Card:** The central UI element is a `max-w-md` card with a `gray-800` background, rounded corners (`rounded-2xl`), and a prominent box-shadow. It has a subtle `hover` effect to scale up slightly and gain a shadow from the accent color.
+    - **Input Field:** A `text` input with a `gray-700` background, rounded corners, and a `focus` state that highlights it with the `indigo` accent color.
+    - **Button:** A full-width button with a bold `indigo-600` background. It features a `hover` transform effect to scale up and a `focus` ring for accessibility. The `disabled` state is a muted gray.
+    - **Result Display:** When the result is shown, it appears in a `gray-700` container with an animated fade-in effect. The generated animal name is large, bold, and uses a green-to-blue gradient for emphasis.
+- **Layout:** Centered, single-column layout using Flexbox (`flex items-center justify-center min-h-screen`).
+- **Animation:** 
+    - The headline has a `pulse` animation.
+    - The result display uses a `fade-in-up` animation.
 
-*   **Frontend:**
-    *   Next.js with App Router
-    *   React Server Components
-    *   Tailwind CSS for styling
-    *   A simple form to input a name.
-    *   A results card to display the generated animal name, image, and audio.
-*   **Backend:**
-    *   Next.js Server Actions to handle form submission.
-    *   Placeholder logic for generating the brainrot animal.
-*   **Styling:**
-    *   **Color Palette:** A dark theme with a gradient text effect for the title. The primary colors are purple, pink, and red.
-    *   **Typography:** The "Inter" font is used throughout the application.
-    *   **Layout:** A centered layout with a maximum width for the main content.
+## 3. Features & Implementation
 
-## Current Plan
+- **Framework:** Next.js 14+ with App Router.
+- **Styling:** Tailwind CSS.
+- **UI Components:**
+    - `app/page.tsx`: The main page component. It is a Client Component (`"use client"`) to manage form state using the `useFormState` hook.
+    - `SubmitButton`: A separate Client Component that uses the `useFormStatus` hook to show a "pending" state while the form is submitting.
+- **Logic:**
+    - `app/actions.ts`: Contains the primary server-side logic.
+    - `createBrainrotAnimal`: A Server Action (`"use server"`) that takes the form data, validates it, and returns the result.
+    - **Validation:** Uses the `zod` library to ensure the user provides a name that is at least two characters long.
+    - **Generation Algorithm:** A simple, deterministic algorithm that uses the length of the user's name and the character code of the first letter to pick an adjective and an animal from predefined lists. This ensures the same name always produces the same result.
+- **Error Handling:** If validation fails, the Server Action returns an error message that is displayed on the UI.
 
-The current plan is to refine the styling of the application to create a more polished and modern user experience. This includes updating the global styles, component-specific styles, and adding animations and transitions. After the styling is complete, the focus will be on implementing the core AI functionality for generating the brainrot animal.
+## 4. Project Structure
+
+```
+/
+|-- app/
+|   |-- globals.css         # Global styles, including Tailwind directives.
+|   |-- layout.tsx          # Root layout.
+|   |-- page.tsx            # The main page UI.
+|   |-- actions.ts          # Server Action for form submission.
+|-- public/
+|-- tailwind.config.ts      # Tailwind CSS configuration.
+|-- package.json
+|-- blueprint.md            # This file.
+```
